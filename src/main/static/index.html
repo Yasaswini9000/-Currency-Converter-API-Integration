@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .api-links a {
+            display: block;
+            color: #007bff;
+            text-decoration: none;
+            margin: 5px 0;
+        }
+        .api-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        async function convertCurrency() {
+            const amount = document.getElementById("amount").value;
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+
+            const requestBody = {
+                amount: parseFloat(amount),
+                from: fromCurrency,
+                to: toCurrency
+            };
+
+            try {
+                const response = await fetch("http://localhost:8080/api/convert", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) throw new Error("Conversion failed");
+
+                const data = await response.json();
+                document.getElementById("result").innerText = `Converted Amount: ${data.convertedAmount}`;
+            } catch (error) {
+                document.getElementById("result").innerText = "Error: Unable to fetch data";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Currency Converter</h2>
+
+    <!-- API Test Links -->
+    <div class="api-links">
+        <a href="http://localhost:8080/api/rates?base=USD" target="_blank">🔗 Test Backend (Check Rates)</a>
+        <a href="http://localhost:8080/api/convert" target="_blank">🔗 Use Postman for Conversion</a>
+    </div>
+
+    <div class="container">
+        <label>Amount:</label>
+        <input type="number" id="amount" value="1">
+
+        <label>From Currency:</label>
+        <input type="text" id="fromCurrency" value="USD">
+
+        <label>To Currency:</label>
+        <input type="text" id="toCurrency" value="INR">
+
+        <button onclick="convertCurrency()">Convert</button>
+
+        <p id="result"></p>
+    </div>
+</body>
+</html>
