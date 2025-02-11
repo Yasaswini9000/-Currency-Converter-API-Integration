@@ -36,7 +36,7 @@ An API Key from Exchange Rates API or Open Exchange Rates
 Setup & Installation
 Clone the repository
 
-git clone https://github.com/Nagasaida1/Currency-Converter-API-Integration.git cd currency-converter
+git clone https://github.com/Yasaswini9000/-Currency-Converter-API-Integration.git cd currency-converter
 
 Configure API Key
 
