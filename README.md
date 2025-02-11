@@ -56,7 +56,7 @@ API Endpoints
 Fetch Exchange Rates
 GET /api/rates?base=USD
 
-image
+
 
 Example Response:
 
@@ -69,7 +69,7 @@ Request Body:
 
 { "from": "USD", "to": "EUR", "amount": 100 }
 
-image
+
 
 Example Response:
 
